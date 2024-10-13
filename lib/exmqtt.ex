@@ -281,7 +281,7 @@ defmodule ExMQTT do
   end
 
   def handle_info({:disconnected, :shutdown, :ssl_closed}, state) do
-    Logger.warn("[ExMQTT] Disconnected - shutdown, :ssl_closed")
+    Logger.warning("[ExMQTT] Disconnected - shutdown, :ssl_closed")
     {:noreply, state}
   end
 
@@ -301,7 +301,7 @@ defmodule ExMQTT do
   end
 
   def handle_info(msg, state) do
-    Logger.warn("[ExMQTT] Unhandled message #{inspect(msg)}")
+    Logger.warning("[ExMQTT] Unhandled message #{inspect(msg)}")
     {:noreply, state}
   end
 
@@ -309,7 +309,7 @@ defmodule ExMQTT do
 
   @impl ExMQTT.DisconnectHandler
   def handle_disconnect({reason_code, properties}, _arg) do
-    Logger.warn(
+    Logger.warning(
       "[ExMQTT] Disconnect received: reason #{reason_code}, properties: #{inspect(properties)}"
     )
 
@@ -322,7 +322,7 @@ defmodule ExMQTT do
 
   @impl ExMQTT.MessageHandler
   def handle_message(_topic, _message, _arg) do
-    Logger.warn("[ExMQTT] Message received but no handler module defined")
+    Logger.warning("[ExMQTT] Message received but no handler module defined")
     :ok
   end
 
