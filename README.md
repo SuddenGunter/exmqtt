@@ -8,6 +8,12 @@ Why this package?
  * supports clean_session/clean_start
  * simplifies usage to just defining opts and implementing a message handler
 
+## Fork
+
+This is a fork of [ryanwinchester/exmqtt](https://github.com/ryanwinchester/exmqtt), with some changes:
+- updated emqtt dependency
+- By default [`emqtt`](https://github.com/emqx/emqtt) compiles `Quic` library, I don't need it so turned that off with fix based on [another fork](https://github.com/NeatoRobotics/exmqtt).
+
 ## Installation
 
 The package can be installed by adding `exmqtt` to your list of dependencies in
@@ -16,7 +22,7 @@ The package can be installed by adding `exmqtt` to your list of dependencies in
 ```elixir
 def deps do
   [
-    {:exmqtt, github: "ryanwinchester/exmqtt", branch: "master"}
+    {:exmqtt, github: "suddengunter/exmqtt", tag: "0.2.1"}
   ]
 end
 ```
@@ -28,25 +34,14 @@ so you might need to do:
 ```elixir
 def deps do
   [
-    {:exmqtt, github: "ryanwinchester/exmqtt", branch: "master"},
+    {:exmqtt, github: "suddengunter/exmqtt", branch: "master"},
     {:gun, "~> 1.3.0", override: true},
     {:cowlib, "~> 2.6.0", override: true}
   ]
 end
 ```
 
-**Note:** This is not available in hex, and there are no plans to do so unless
-`emqtt` starts consistently and reliably publishing to hex (they do publish to
-hex but not consistently and reliably).
-
-## Development
-
-By default [`emqtt`](https://github.com/emqx/emqtt) compiles `Quic` library, if it is not necessary is 
-possible set the env variable `BUILD_WITHOUT_QUIC` to `1`:
-
-```
-BUILD_WITHOUT_QUIC=1 iex -S mix 
-```
+**Note:** This is not available in hex, I will add it if I can confirm this fork works fine in some projects.
 
 ## Usage
 
@@ -124,7 +119,7 @@ ExMQTT.unsubscribe_sync(topic)
 
  * The `opts` are *mostly* the same as [`:emqtt.option()`](https://github.com/emqx/emqtt/blob/783c943f7aa1295b99f4a0c20436978eb6b70053/src/emqtt.erl#L105), but they are different, so use the type defs in this library
  * `opts.ssl_opts` are erlang's [`:ssl.option()`](https://erlang.org/doc/man/ssl.html#type-tls_client_option)
- * `opts.handler_functions` type is defined [here](https://github.com/ryanwinchester/exmqtt/blob/b404a86bc3612b23bb32008776de09efa1fee69c/lib/exmqtt.ex#L13)
+ * `opts.handler_functions` type is defined [here](https://github.com/suddengunter/exmqtt/blob/b404a86bc3612b23bb32008776de09efa1fee69c/lib/exmqtt.ex#L13)
  * `opts.start_when` is for controller the GenServer's `handle_continue/2` callback, so you can add an
  init condition. This is handy for example if you need to wait for the network to be ready before you try to connect to the MQTT broker. The value is a tuple `{start_when, retry_in}` where `start_when` is a `{module, function, arguments}` (MFA) tuple for a function that resolves to a `boolean` which determines when we actually finish `init`, and `retry_in` is the time to sleep (in ms) before we try again.
  *  To work with common CA, it is useful to use [`certifi`](https://github.com/certifi/erlang-certifi)

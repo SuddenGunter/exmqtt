@@ -31,7 +31,7 @@ defmodule ExMQTT.MixProject do
   defp package do
     [
       licenses: ["Apache-2.0"],
-      links: %{"GitHub" => "https://github.com/ryanwinchester/exmqtt"}
+      links: %{"GitHub" => "https://github.com/suddengunter/exmqtt"}
     ]
   end
 end
