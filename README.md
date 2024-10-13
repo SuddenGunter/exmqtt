@@ -22,7 +22,7 @@ The package can be installed by adding `exmqtt` to your list of dependencies in
 ```elixir
 def deps do
   [
-    {:exmqtt, github: "suddengunter/exmqtt", tag: "0.2.1"}
+    {:exmqtt, github: "suddengunter/exmqtt", tag: "v0.2.1"}
   ]
 end
 ```
